@@ -2,7 +2,7 @@ import styled from "@emotion/styled"
 
 // 헤더영역 디자인
 export const MainHeader = styled.header`
-
+  margin-bottom: 20px;
 `;
 
 export const MainNav = styled.nav`
@@ -244,6 +244,12 @@ export const PostBtn= styled.button`
   margin: 0 auto;
   display: block;
   cursor: pointer;
+`;
+
+//err msg 추가
+export const ErrMsg = styled.p`
+  font-size: 10px;
+  color: red;
 `;
 
 
