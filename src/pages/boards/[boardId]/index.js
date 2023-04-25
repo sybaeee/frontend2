@@ -2,9 +2,22 @@ import { BoardContent, BoardDetailWrap, BoardInfoWrap, BoardTitle } from "@/styl
 import { WriteBtn } from "@/styles/boards/boardList.styles";
 import { ArrowBtn, ArrowWrap, Carousel, CarouselContents, CarouselDetail, CarouselItem, CarouselTextWrap, CarouselTitle, JoinBtn, LoginBtn, MainHeader, MainNav, MenuItem, MenuWrap, NavBtnWrap, Pin, PinItem } from "@/styles/boards/boardWrtie.styles";
 import { Footer, FooterWrap } from "@/styles/common/footer.styles";
+import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const BoardDetailPage = ()=>{
+  const [post, setPost] = useState(null);
+  const router = useRouter(); // router.query.boardId 에는 사용자가 주소에 입력한 값이문자열로 들어있음
+
+  // 최초 렌더링 할 때 해당 게시글에 대한 데이터 요청
+  useEffect(()=>{
+    axios.get(`https://koreanjson.com/posts/${router.query.boardId}`)
+    .then((res)=>{setPost(res.data)})
+    .catch((err)=>{console.log(err)});
+  }, []);
+
   return (
     <>
       <MainHeader>
@@ -46,45 +59,22 @@ const BoardDetailPage = ()=>{
       </MainHeader>
       <BoardDetailWrap>
         <BoardTitle>
-          게시글 제목입니다
+          {post?.title}
         </BoardTitle>
         <BoardInfoWrap>
           <p>작성자id</p>
-          <p>1</p>
+          <p>{post?.userId}</p>
           <p>게시글id</p>
-          <p>13</p>
+          <p>{post?.id}</p>
         </BoardInfoWrap>
         <BoardInfoWrap>
           <p>작성일자</p>
-          <p>2023-04-04</p>
+          <p>{post?.createdAt}</p>
           <p>수정일자</p>
-          <p>2023-04-06</p>
+          <p>{post?.updatedAt}</p>
         </BoardInfoWrap>
         <BoardContent>
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
-          게시글내용입니다
+          {post?.content}
         </BoardContent>
         <WriteBtn>수정하기</WriteBtn>
       </BoardDetailWrap>
