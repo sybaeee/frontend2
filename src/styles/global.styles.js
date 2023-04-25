@@ -9,6 +9,15 @@ const style = css`
     box-sizing: border-box;
     font-family: 'Do Hyeon', sans-serif;
   }
+
+  input:focus { 
+    outline: none !important; 
+    border-color: aqua; 
+  }
+  textarea:focus { 
+    outline: none !important; 
+    border-color: aqua; 
+  }
 `;
 
 const GlobalStyle = ()=>{
