@@ -1,13 +1,23 @@
 import { BoardHeader, BoardListWrap, BoardSearch, BoardTableHeader, BoardTableRow, Line, SearchBtn, SearchWrap, WriteBtn } from "@/styles/boards/boardList.styles";
 import { ArrowBtn, ArrowWrap, Carousel, CarouselContents, CarouselDetail, CarouselItem, CarouselTextWrap, CarouselTitle, JoinBtn, LoginBtn, MainHeader, MainNav, MenuItem, MenuWrap, NavBtnWrap, Pin, PinItem } from "@/styles/boards/boardWrtie.styles";
+import { Footer, FooterWrap } from "@/styles/common/footer.styles";
+import axios from "axios";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const BoardsListPage = ()=>{
+  const [posts, setPosts] = useState([]);
+  
+  useEffect(()=>{
+    axios.get('http://koreanjson.com/posts')
+    .then(res=>setPosts(res.data))
+    .catch((err)=>{console.log(err)});
+  }, []);
   return(
     <>
     <MainHeader>
         <MainNav>
-          <Image src={'/logo.svg'} width={200} height={100}/>
+          <Image src={'/logo.svg'} width={200} height={100} alt="logo image"/>
           <NavBtnWrap>
             <LoginBtn>로그인</LoginBtn>
             <JoinBtn>회원가입</JoinBtn>
@@ -42,7 +52,7 @@ const BoardsListPage = ()=>{
           <MenuItem>내정보보기</MenuItem>
         </MenuWrap>
       </MainHeader>
-      
+
     <BoardListWrap>
       <h1>게시글 목록</h1>
       <Line/>
@@ -60,43 +70,25 @@ const BoardsListPage = ()=>{
         <p>작성일자</p>
         <p>수정일자</p>
       </BoardTableHeader>
-      <BoardTableRow>
-        <p>1</p>
-        <p>정당</p>
-        <p>1</p>
-        <p>2019-02-24</p>
-        <p>2019-02-24</p>
-      </BoardTableRow>
-      <BoardTableRow>
-        <p>2</p>
-        <p>정당의 목적</p>
-        <p>1</p>
-        <p>2019-02-24</p>
-        <p>2019-02-24</p>
-      </BoardTableRow>
-      <BoardTableRow>
-        <p>3</p>
-        <p>정당의 목적이나 해산을 제소</p>
-        <p>1</p>
-        <p>2019-02-24</p>
-        <p>2019-02-24</p>
-      </BoardTableRow>
-      <BoardTableRow>
-        <p>4</p>
-        <p> 헌법재판소</p>
-        <p>1</p>
-        <p>2019-02-24</p>
-        <p>2019-02-24</p>
-      </BoardTableRow>
-      <BoardTableRow>
-        <p>5</p>
-        <p>정당의 목적이나 활동이 민주적 기본질서에 위배될 때에는 정부는 헌법재판소에 그 해산을 제소할 수 있고, 정당은 헌법재판소의 심판에 의하여 해산된다.</p>
-        <p>1</p>
-        <p>2019-02-24</p>
-        <p>2019-02-24</p>
-      </BoardTableRow>
+      {
+        posts.map(
+          (v, index)=>
+          <BoardTableRow key={v.id}>
+            <p>{index + 1}</p>
+            <p>{v.title}</p>
+            <p>{v.UserId}</p>
+            <p>{v.createdAt}</p>
+            <p>{v.updatedAt}</p>
+          </BoardTableRow>
+        )
+      }
       <WriteBtn>글쓰기</WriteBtn>
     </BoardListWrap>
+    <Footer>
+      <FooterWrap>
+        <p>푸터영역입니다</p>
+      </FooterWrap>
+    </Footer>
     </>
   );
 }

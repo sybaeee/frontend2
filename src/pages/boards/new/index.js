@@ -140,8 +140,8 @@ const BoardWritePage = ()=>{
               <div>
                 <BoardWriteInput type="radio" name="prev" id="public" defaultChecked/>
                 <BoardWriteInputLabel htmlFor="public">공개</BoardWriteInputLabel>
-                <BoardWriteInput type="radio" name="prev" id="public" />
-                <BoardWriteInputLabel htmlFor="prev">비공개</BoardWriteInputLabel>
+                <BoardWriteInput type="radio" name="prev" id="private" />
+                <BoardWriteInputLabel htmlFor="private">비공개</BoardWriteInputLabel>
               </div>
             </BoardWriteInputWrap>
           </BoardWriteInputFlexContainer>
